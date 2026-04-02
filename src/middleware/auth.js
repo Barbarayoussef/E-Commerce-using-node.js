@@ -1,0 +1,67 @@
+import jwt from "jsonwebtoken";
+export const auth = (req, res, next) => {
+  let { authorization } = req.headers;
+  if (!authorization) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  try {
+    let [bearer, token] = authorization.split(" ");
+    let signature = "";
+    switch (bearer) {
+      case "admin":
+        signature = "e-commerceAdmin";
+        break;
+      case "user":
+        signature = "e-commerceUser";
+        break;
+      default:
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    let decoded = jwt.verify(token, signature);
+    req.user = decoded;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
+
+export const generateVerifyToken = (user) => {
+  let signature = "";
+  switch (user.role) {
+    case "admin":
+      signature = "e-commerceAdmin";
+      break;
+    case "user":
+      signature = "e-commerceUser";
+      break;
+    default:
+      return res.status(401).json({ message: "Unauthorized" });
+  }
+  let token = jwt.sign({ id: user._id, role: user.role }, signature, {
+    expiresIn: "24h",
+  });
+  return { token };
+};
+export const generateBothToken = (user) => {
+  let signature = "";
+  switch (user.role) {
+    case "admin":
+      signature = "e-commerceAdmin";
+      break;
+    case "user":
+      signature = "e-commerceUser";
+      break;
+  }
+  console.log(user._id);
+
+  let accessToken = jwt.sign({ id: user._id, role: user.role }, signature, {
+    expiresIn: "24h",
+  });
+  console.log(accessToken);
+
+  let refreshToken = jwt.sign({ id: user._id, role: user.role }, signature, {
+    expiresIn: "1d",
+  });
+  let token = { accessToken, refreshToken };
+  return token;
+};
