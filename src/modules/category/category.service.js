@@ -46,7 +46,10 @@ export const softDelete = async (req, res) => {
 };
 
 export const getCategories = async (req, res) => {
-  let categories = await categoryModel.find().populate("subcategory");
+  let categories = await categoryModel.find().populate({
+    path: "subcategory",
+    match: { isDeleted: false },
+  });
   if (categories.length === 0) {
     return res.status(404).json({ message: "No categories found" });
   } else {
