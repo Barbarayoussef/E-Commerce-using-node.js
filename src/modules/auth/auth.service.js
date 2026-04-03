@@ -151,15 +151,18 @@ export const forgetPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   let { email, otp, newPassword } = req.body;
+  otp = otp.toString();
   let user = await userModel.findOne({ email });
   if (!user || user.isDeleted) {
     return res.status(400).json({ message: "no user found" });
   }
   let storedOtp = await client.get(`${user.email}:otp`);
+  console.log(storedOtp);
+
   if (storedOtp !== otp) {
     return res.status(400).json({ message: "Invalid OTP" });
   }
-  let hashedPassword = await bcrypt.hash(newPassword, env.saltRound);
+  let hashedPassword = await bcrypt.hash(newPassword, Number(env.saltRound));
   user.password = hashedPassword;
   await user.save();
   await client.del(`${user.email}:otp`);
