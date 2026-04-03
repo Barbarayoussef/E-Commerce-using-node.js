@@ -9,7 +9,7 @@ import { client } from "../../database/redis.connection.js";
 export const signup = async (req, res) => {
   const { name, email, password, confirmPassword, phone, address, role } =
     req.body;
-  const avatar = req.file ? req.file.path : null;
+
   const existedUser = await userModel.findOne({ email });
   if (existedUser && !existedUser.isDeleted) {
     return res.status(400).json({ message: "User already exists" });
@@ -18,6 +18,10 @@ export const signup = async (req, res) => {
     return res
       .status(400)
       .json({ message: "Password and confirm password do not match" });
+  }
+  let avatar = "";
+  if (req.file) {
+    avatar = `${env.baseURL}/uploads/${req.file.filename}`;
   }
   let hashedPassword = await bcrypt.hash(password, Number(env.saltRound));
 

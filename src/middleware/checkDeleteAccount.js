@@ -1,7 +1,7 @@
-import { userModel } from "../database/model/user.model";
+import { userModel } from "../database/model/user.model.js";
 
-export const deletedAccounts = async (req, res, next) => {
-  const user = await userModel.findOne({ _id: req.user._id });
+export const checkDeleteAccount = async (req, res, next) => {
+  const user = await userModel.findOne({ _id: req.user.id });
   if (!user || user.isDeleted) {
     return res
       .status(403)
