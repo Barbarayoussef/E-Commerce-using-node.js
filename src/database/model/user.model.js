@@ -1,4 +1,3 @@
-import { optional } from "joi";
 import mongoose from "mongoose";
 
 const userSchema = mongoose.Schema({
@@ -34,6 +33,14 @@ const userSchema = mongoose.Schema({
     required: true,
     enum: ["user", "admin"],
     default: "user",
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
   },
 });
 

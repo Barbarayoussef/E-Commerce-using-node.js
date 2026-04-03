@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import env from "../../config/env.service.js";
 
-const databaseConnection = () => {
+export const databaseConnection = () => {
   mongoose
     .connect(env.mongoURL)
     .then(() => {
