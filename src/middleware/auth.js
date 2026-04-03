@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import env from "../../config/env.service.js";
 export const auth = (req, res, next) => {
   let { authorization } = req.headers;
   if (!authorization) {
@@ -9,10 +10,10 @@ export const auth = (req, res, next) => {
     let signature = "";
     switch (bearer) {
       case "admin":
-        signature = "e-commerceAdmin";
+        signature = env.adminSignature;
         break;
       case "user":
-        signature = "e-commerceUser";
+        signature = env.userSignature;
         break;
       default:
         return res.status(401).json({ message: "Unauthorized" });
@@ -29,10 +30,10 @@ export const generateVerifyToken = (user) => {
   let signature = "";
   switch (user.role) {
     case "admin":
-      signature = "e-commerceAdmin";
+      signature = env.adminSignature;
       break;
     case "user":
-      signature = "e-commerceUser";
+      signature = env.userSignature;
       break;
     default:
       return res.status(401).json({ message: "Unauthorized" });
@@ -46,10 +47,10 @@ export const generateBothToken = (user) => {
   let signature = "";
   switch (user.role) {
     case "admin":
-      signature = "e-commerceAdmin";
+      signature = env.adminSignature;
       break;
     case "user":
-      signature = "e-commerceUser";
+      signature = env.userSignature;
       break;
   }
   console.log(user._id);
