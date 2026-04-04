@@ -2,15 +2,15 @@ import subcategoryModel from "../../database/model/subcategory.model.js";
 import categoryModel from "../../database/model/category.model.js";
 
 export const createSubcategory = async (req, res) => {
-  let { name, categoryName } = req.body;
-  let category = await categoryModel.findOne({ name: categoryName });
+  let { name, categoryId } = req.body;
+  let category = await categoryModel.findById(categoryId);
   if (!category) {
     return res.status(404).json({ message: "Category not found" });
   }
   let subcategory = await subcategoryModel.create({
     name,
-    categoryId: category._id,
-    categoryName,
+    categoryId,
+    categoryName: category.name,
   });
   category.subcategory.push(subcategory._id);
   await category.save();
@@ -21,15 +21,15 @@ export const createSubcategory = async (req, res) => {
 };
 
 export const updateSubcategory = async (req, res) => {
-  let { name, categoryName } = req.body;
+  let { name, categoryId } = req.body;
   let { id } = req.params;
   let subcategory = await subcategoryModel.findById(id);
   if (!subcategory) {
     return res.status(404).json({ message: "Subcategory not found" });
   }
   let category = "";
-  if (categoryName) {
-    category = await categoryModel.findOne({ name: categoryName });
+  if (categoryId) {
+    category = await categoryModel.findById(categoryId);
   }
   let updatedSubcategory = await subcategoryModel.findByIdAndUpdate(id, {
     name: name ? name : subcategory.name,
