@@ -48,11 +48,39 @@ export const softDelete = async (req, res) => {
 export const getCategories = async (req, res) => {
   let categories = await categoryModel.find().populate({
     path: "subcategory",
-    match: { isDeleted: false },
   });
   if (categories.length === 0) {
     return res.status(404).json({ message: "No categories found" });
   } else {
     return res.status(200).json({ message: "Categories found", categories });
   }
+};
+export const getActiveCategories = async (req, res) => {
+  let categories = await categoryModel
+    .find({ isDeleted: false })
+    .populate({
+      path: "subcategory",
+      match: { isDeleted: false },
+    })
+    .select("-isDeleted -deletedAt");
+  if (categories.length === 0) {
+    return res.status(404).json({ message: "No categories found" });
+  } else {
+    return res.status(200).json({ message: "Categories found", categories });
+  }
+};
+
+export const getSubcategoryForCategory = async (req, res) => {
+  let { id } = req.params;
+  let category = await categoryModel.findById(id);
+  if (!category) {
+    return res.status(404).json({ message: "category not found" });
+  }
+  let subcategories = await subcategoryModel.find({ categoryId: id });
+  if (subcategories.length === 0) {
+    return res
+      .status(204)
+      .json({ message: "no subcategories for this category" });
+  }
+  return res.json(subcategories);
 };

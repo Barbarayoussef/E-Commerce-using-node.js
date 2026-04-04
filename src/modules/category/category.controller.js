@@ -4,6 +4,8 @@ import {
   updateCategory,
   softDelete,
   getCategories,
+  getActiveCategories,
+  getSubcategoryForCategory,
 } from "./category.service.js";
 import { auth } from "../../middleware/auth.js";
 import { authorize } from "../../middleware/authorize.js";
@@ -20,5 +22,7 @@ router.put(
 );
 router.delete("/:id", auth, authorize("admin"), softDelete);
 router.get("", auth, authorize("admin"), getCategories);
+router.get("/all", getActiveCategories);
+router.get("/:id/subcategories", getSubcategoryForCategory);
 
 export default router;

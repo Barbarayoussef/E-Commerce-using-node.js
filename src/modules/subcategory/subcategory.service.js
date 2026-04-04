@@ -46,3 +46,12 @@ export const softDelete = async (req, res) => {
   await subcategory.save();
   return res.status(200).json({ message: "Subcategory deleted successfully" });
 };
+
+export const getSubcategoryById = async (req, res) => {
+  let { id } = req.params;
+  let subcategory = await subcategoryModel.findById(id);
+  if (!subcategory) {
+    return res.status(404).json({ message: "no subcategory found" });
+  }
+  return res.json({ message: "subcategory", subcategory });
+};
