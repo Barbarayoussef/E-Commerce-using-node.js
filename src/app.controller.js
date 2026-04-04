@@ -7,6 +7,7 @@ import categoryRouter from "./modules/category/category.controller.js";
 import subcategoryRouter from "./modules/subcategory/subcategory.controller.js";
 import productRouter from "./modules/product/product.controller.js";
 import cartRouter from "./modules/cart/cart.controller.js";
+import orderRouter from "./modules/order/order.controller.js";
 
 export const bootstrap = () => {
   const app = express();
@@ -19,6 +20,7 @@ export const bootstrap = () => {
   app.use("/api/v1/subcategories", subcategoryRouter);
   app.use("/api/v1", productRouter);
   app.use("/api/v1/cart", cartRouter);
+  app.use("/api/v1", orderRouter);
 
   app.listen(env.port, () => {
     console.log("server working");

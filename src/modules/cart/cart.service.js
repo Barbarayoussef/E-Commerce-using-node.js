@@ -8,6 +8,7 @@ export const addItemToCart = async (req, res) => {
     return res.status(404).json({ message: "product not found" });
   }
   let cart = await cartModel.findOne({ user: req.user.id });
+
   let existingProduct = cart.products.findIndex(
     (product) => product.productId.toString() === productId,
   );
@@ -17,7 +18,6 @@ export const addItemToCart = async (req, res) => {
       return res
         .status(400)
         .json({ message: "Product quantity exceeds stock" });
-    product.stock -= 1;
     cart.products[existingProduct].totalPrice =
       cart.products[existingProduct].quantity * product.price;
   } else {
@@ -28,9 +28,8 @@ export const addItemToCart = async (req, res) => {
       quantity: 1,
       totalPrice: product.price,
     });
-    product.stock -= 1;
   }
-  await product.save();
+
   let totalCartPrice = 0;
   cart.products.map((product) => (totalCartPrice += product.totalPrice));
   cart.totalCartPrice = totalCartPrice;
@@ -75,8 +74,8 @@ export const updateQuantity = async (req, res) => {
     });
   console.log(stock - quantity);
 
-  existedProduct.stock = stock - quantity;
-  await existedProduct.save();
+  //   existedProduct.stock = stock - quantity;
+  //   await existedProduct.save();
   product.quantity = quantity;
   product.totalPrice = quantity * product.price;
   cart.totalCartPrice =
@@ -96,10 +95,10 @@ export const removeItem = async (req, res) => {
   );
   if (productIndex === -1)
     return res.status(404).json({ message: "Product not found in cart" });
-  if (product) {
-    product.stock += cart.products[productIndex].quantity;
-    await product.save();
-  }
+  //   if (product) {
+  //     product.stock += cart.products[productIndex].quantity;
+  //     await product.save();
+  //   }
   let returnedPrice = cart.products[productIndex].totalPrice;
   cart.totalCartPrice -= returnedPrice;
 
@@ -114,13 +113,13 @@ export const clearCart = async (req, res) => {
   let cart = await cartModel.findOne({ user: req.user.id });
   if (cart.products.length === 0)
     return res.status(400).json({ message: "Cart is empty" });
-  for (const item of cart.products) {
-    let product = await productModel.findById(item.productId);
-    if (product) {
-      product.stock += item.quantity;
-      await product.save();
-    }
-  }
+  //   for (const item of cart.products) {
+  //     let product = await productModel.findById(item.productId);
+  //     if (product) {
+  //       product.stock += item.quantity;
+  //       await product.save();
+  //     }
+  //   }
   cart.products = [];
   cart.totalCartPrice = 0;
   await cart.save();
