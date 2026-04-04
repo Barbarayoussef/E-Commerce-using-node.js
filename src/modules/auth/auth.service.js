@@ -5,6 +5,7 @@ import { sendEmail } from "../../common/email/sendEmail.js";
 import jwt from "jsonwebtoken";
 import { generateBothToken } from "../../middleware/auth.js";
 import { client } from "../../database/redis.connection.js";
+import { cartModel } from "../../database/model/cart.model.js";
 
 export const signup = async (req, res) => {
   const { name, email, password, confirmPassword, phone, address, role } =
@@ -80,6 +81,7 @@ export const verifyAccount = async (req, res) => {
     }
     res.status(401).json({ message: "Invalid token" });
   }
+  let cart = await cartModel.create({ userId: user._id });
 };
 
 export const login = async (req, res) => {
