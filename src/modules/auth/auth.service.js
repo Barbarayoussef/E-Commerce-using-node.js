@@ -71,6 +71,8 @@ export const verifyAccount = async (req, res) => {
       return res.status(400).json({ message: "User already verified" });
     }
     user.isVerified = true;
+    let cart = await cartModel.create({ user: user._id });
+    user.cart = cart._id;
     await user.save();
     return res.status(200).json({ message: "User verified successfully" });
   } catch (error) {
@@ -81,7 +83,6 @@ export const verifyAccount = async (req, res) => {
     }
     res.status(401).json({ message: "Invalid token" });
   }
-  let cart = await cartModel.create({ userId: user._id });
 };
 
 export const login = async (req, res) => {

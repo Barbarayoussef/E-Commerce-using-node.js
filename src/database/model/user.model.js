@@ -46,6 +46,11 @@ const userSchema = mongoose.Schema({
     type: Date,
     default: null,
   },
+  cart: {
+    type: mongoose.Types.ObjectId,
+    ref: "cart",
+    default: null,
+  },
 });
 
 export const userModel = mongoose.model("user", userSchema);

@@ -21,6 +21,9 @@ productSchema.pre("save", function () {
   if (this.stock === 0) {
     this.isDeleted = true;
     this.autoDeletedAt = new Date();
+  } else {
+    this.isDeleted = false;
+    this.autoDeletedAt = null;
   }
 });
 

@@ -62,14 +62,20 @@ export const updateQuantity = async (req, res) => {
     return res.status(404).json({ message: "Product not found in cart" });
   }
   let returnedPrice = product.totalPrice;
+  console.log(existedProduct.stock);
 
   let stock = existedProduct.stock + product.quantity;
+  console.log(stock);
+
+  console.log(existedProduct);
+
   if (quantity > stock)
     return res.status(400).json({
       message: `Product quantity exceeds stock, only ${stock} available`,
     });
+  console.log(stock - quantity);
 
-  existedProduct.stock = stock - product.quantity;
+  existedProduct.stock = stock - quantity;
   await existedProduct.save();
   product.quantity = quantity;
   product.totalPrice = quantity * product.price;
