@@ -15,6 +15,10 @@ export const auth = (req, res, next) => {
       case "user":
         signature = env.userSignature;
         break;
+      case "staff":
+        signature = env.staffSignature;
+        break;
+
       default:
         return res.status(401).json({ message: "Unauthorized" });
     }

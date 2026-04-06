@@ -10,6 +10,9 @@ export const checkIn = async (req, res) => {
       .status(400)
       .json({ message: "You are not a authorized staff or admin" });
   }
+  if (role === "admin") {
+    id = req.body.id;
+  }
   let staff = await staffModel.findOne({ user: id });
   if (!staff) return res.status(404).json({ message: "Staff not found" });
   const yesterday = new Date();
@@ -77,6 +80,9 @@ export const checkOut = async (req, res) => {
     return res
       .status(400)
       .json({ message: "You are not a authorized staff or admin" });
+  }
+  if (role === "admin") {
+    id = req.body.id;
   }
   let staffMember = await staffModel.findOne({ user: id });
   let checkOutDate = new Date();

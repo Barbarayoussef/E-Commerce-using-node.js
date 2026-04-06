@@ -6,7 +6,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: (req, file) => {
     return {
-      folder: req.cloudinaryFolder || "general", // dynamic folder — set this in your controller or route middleware
+      folder: req.cloudinaryFolder || "general",
       allowed_formats: ["jpg", "jpeg", "png", "webp"],
       public_id: Date.now() + "-" + file.originalname.split(".")[0],
     };

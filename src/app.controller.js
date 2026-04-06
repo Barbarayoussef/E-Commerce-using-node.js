@@ -58,20 +58,26 @@ export const bootstrap = () => {
   });
   io.on("connection", (socket) => {
     console.log(`Connected: ${socket.user.id} with role: ${socket.user.role}`);
+    socket.on("disconnect", () => {
+      console.log(`Disconnected: ${socket.user.id}`);
+    });
 
     socket.on("admin:send-offer", async (payload) => {
       if (socket.user.role !== "admin") {
         return socket.emit("error", "Access Denied: You are not an admin!");
       }
+      try {
+        const offer = {
+          ...payload,
+          createdAt: new Date(),
+        };
+        console.log(offer);
 
-      const offer = {
-        ...payload,
-        createdAt: new Date(),
-      };
-      console.log(offer);
-
-      await messageModel.create(offer);
-      io.emit("user:receive-offer", offer);
+        await messageModel.create(offer);
+        io.emit("user:receive-offer", offer);
+      } catch (err) {
+        socket.emit("error", "Failed to send offer");
+      }
     });
   });
 

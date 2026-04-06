@@ -18,6 +18,11 @@ router.put(
   auth,
   checkDeleteAccount,
   validation(updateSchema),
+  (req, _, next) => {
+    req.cloudinaryFolder = "avatar";
+    next();
+  },
+
   upload.single("avatar"),
   updateProfile,
 );
@@ -26,6 +31,10 @@ router.post(
   "/upload-avatar",
   auth,
   checkDeleteAccount,
+  (req, _, next) => {
+    req.cloudinaryFolder = "avatar";
+    next();
+  },
   upload.single("avatar"),
   uploadAvatar,
 );
