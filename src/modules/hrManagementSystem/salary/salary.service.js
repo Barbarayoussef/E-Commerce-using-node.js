@@ -1,3 +1,6 @@
+import { deductionModel } from "../../../database/model/deduction.model.js";
+import { staffModel } from "../../../database/model/staff.model.js";
+
 export const calculateSalary = async (req, res) => {
   let { id, month } = req.params;
   let staff = await staffModel.findById(id);

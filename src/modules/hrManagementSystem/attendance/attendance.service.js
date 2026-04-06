@@ -30,7 +30,7 @@ export const checkIn = async (req, res) => {
       if (yesterdayData.checkInTime && !yesterdayData.checkOutTime) {
         const month = yesterdayStr.slice(0, 7);
         await deductionModel.create({
-          staff: id,
+          staff: staff._id,
           reason: "Absent (No checkout recorded)",
           amount: staff.dailySalary,
           month,
@@ -136,7 +136,7 @@ export const checkOut = async (req, res) => {
       let deductionAmount = (missingHours / 8) * staffMember.dailySalary;
 
       await deductionModel.create({
-        staff: id,
+        staff: staffMember._id,
         reason: "Incomplete working hours",
         amount: deductionAmount,
         month,
@@ -144,7 +144,7 @@ export const checkOut = async (req, res) => {
     }
     if (checkInData.isLate === "true") {
       await deductionModel.create({
-        staff: id,
+        staff: staffMember._id,
         reason: "Late Arrival (After 9:00 AM)",
         amount: staffMember.dailySalary * 0.1,
         month: month,
@@ -175,7 +175,7 @@ export const checkOut = async (req, res) => {
       message: "Checked out successfully",
       checkIn: `${checkInHour12} ${checkInHour24 >= 12 ? "PM" : "AM"}`,
       checkOut: `${checkOutHour12} ${checkOutHour24 >= 12 ? "PM" : "AM"}`,
-      hoursWorked: totalWorkedHours.toFixed(2),
+      hoursWorked: totalWorkedHours,
     });
   } catch (error) {
     return res

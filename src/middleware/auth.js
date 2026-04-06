@@ -39,6 +39,9 @@ export const generateVerifyToken = (user) => {
     case "user":
       signature = env.userSignature;
       break;
+    case "staff":
+      signature = env.staffSignature;
+      break;
     default:
       return res.status(401).json({ message: "Unauthorized" });
   }
@@ -55,6 +58,9 @@ export const generateBothToken = (user) => {
       break;
     case "user":
       signature = env.userSignature;
+      break;
+    case "staff":
+      signature = env.staffSignature;
       break;
   }
   console.log(user._id);
