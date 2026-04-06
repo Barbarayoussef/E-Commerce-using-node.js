@@ -17,18 +17,18 @@ A full-featured backend for an e-commerce platform built with Node.js and Expres
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Runtime | Node.js (ES Modules) |
-| Framework | Express 5 |
-| Database | MongoDB via Mongoose |
-| Cache | Redis (OTP storage, attendance keys) |
-| Auth | JWT with role-specific secrets |
-| File Uploads | Multer + Cloudinary |
-| Email | Nodemailer (Gmail SMTP) |
-| Real-time | Socket.io |
-| Validation | Joi |
-| Password Hashing | bcrypt |
+| Layer            | Technology                           |
+| ---------------- | ------------------------------------ |
+| Runtime          | Node.js (ES Modules)                 |
+| Framework        | Express 5                            |
+| Database         | MongoDB via Mongoose                 |
+| Cache            | Redis (OTP storage, attendance keys) |
+| Auth             | JWT with role-specific secrets       |
+| File Uploads     | Multer + Cloudinary                  |
+| Email            | Nodemailer (Gmail SMTP)              |
+| Real-time        | Socket.io                            |
+| Validation       | Joi                                  |
+| Password Hashing | bcrypt                               |
 
 ---
 
@@ -157,21 +157,21 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 ```
 
-| Variable | Description |
-|---|---|
-| `PORT` | HTTP server port |
-| `BASE_URL` | Public base URL (used in verification links) |
-| `MONGO_URL` | MongoDB connection string |
-| `ADMIN_SIGNATURE` | JWT secret for admin tokens |
-| `USER_SIGNATURE` | JWT secret for user tokens |
-| `EMAIL_USER` | Gmail address for sending emails |
-| `EMAIL_PASS` | Gmail app password |
-| `EMAIL_NAME` | Display name in the From header |
-| `SALT_ROUND` | bcrypt cost factor |
-| `VERIFY_EMAILSECRET` | Secret for email verification JWTs |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
-| `CLOUDINARY_API_KEY` | Cloudinary API key |
-| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+| Variable                | Description                                  |
+| ----------------------- | -------------------------------------------- |
+| `PORT`                  | HTTP server port                             |
+| `BASE_URL`              | Public base URL (used in verification links) |
+| `MONGO_URL`             | MongoDB connection string                    |
+| `ADMIN_SIGNATURE`       | JWT secret for admin tokens                  |
+| `USER_SIGNATURE`        | JWT secret for user tokens                   |
+| `EMAIL_USER`            | Gmail address for sending emails             |
+| `EMAIL_PASS`            | Gmail app password                           |
+| `EMAIL_NAME`            | Display name in the From header              |
+| `SALT_ROUND`            | bcrypt cost factor                           |
+| `VERIFY_EMAILSECRET`    | Secret for email verification JWTs           |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name                        |
+| `CLOUDINARY_API_KEY`    | Cloudinary API key                           |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret                        |
 
 > **Note:** The Redis connection URL is currently hardcoded in `src/database/redis.connection.js`. Move it to `.env` before deploying to production.
 
@@ -223,112 +223,112 @@ Base path: `/api/v1`
 
 ### Auth — `/api/v1/auth`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/signup` | No | Register (optional `avatar` file) |
-| GET | `/verify-email/:token` | No | Verify email address |
-| POST | `/resend-verification` | No | Resend verification email |
-| POST | `/login` | No | Login |
-| POST | `/forget-password` | No | Request password reset OTP |
-| POST | `/reset-password` | No | Reset password with OTP |
+| Method | Endpoint               | Auth | Description                       |
+| ------ | ---------------------- | ---- | --------------------------------- |
+| POST   | `/signup`              | No   | Register (optional `avatar` file) |
+| GET    | `/verify-email/:token` | No   | Verify email address              |
+| POST   | `/resend-verification` | No   | Resend verification email         |
+| POST   | `/login`               | No   | Login                             |
+| POST   | `/forget-password`     | No   | Request password reset OTP        |
+| POST   | `/reset-password`      | No   | Reset password with OTP           |
 
 ### Users — `/api/v1/users`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/profile` | user | Get profile |
-| PUT | `/profile` | user | Update profile (optional `avatar` file) |
-| DELETE | `/profile` | user | Soft-delete account |
-| POST | `/upload-avatar` | user | Upload avatar |
+| Method | Endpoint         | Auth | Description                             |
+| ------ | ---------------- | ---- | --------------------------------------- |
+| GET    | `/profile`       | user | Get profile                             |
+| PUT    | `/profile`       | user | Update profile (optional `avatar` file) |
+| DELETE | `/profile`       | user | Soft-delete account                     |
+| POST   | `/upload-avatar` | user | Upload avatar                           |
 
 ### Categories — `/api/v1/categories`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/` | admin | Create category (requires `image` file) |
-| PUT | `/:id` | admin | Update category |
-| DELETE | `/:id` | admin | Soft-delete category |
-| GET | `/` | admin | List all categories |
-| GET | `/all` | No | List active categories (public) |
-| GET | `/:id/subcategories` | No | Get subcategories for a category |
+| Method | Endpoint             | Auth  | Description                             |
+| ------ | -------------------- | ----- | --------------------------------------- |
+| POST   | `/`                  | admin | Create category (requires `image` file) |
+| PUT    | `/:id`               | admin | Update category                         |
+| DELETE | `/:id`               | admin | Soft-delete category                    |
+| GET    | `/`                  | admin | List all categories                     |
+| GET    | `/all`               | No    | List active categories (public)         |
+| GET    | `/:id/subcategories` | No    | Get subcategories for a category        |
 
 ### Subcategories — `/api/v1/subcategories`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/` | admin | Create subcategory |
-| PUT | `/:id` | admin | Update subcategory |
-| DELETE | `/:id` | admin | Soft-delete subcategory |
-| GET | `/:id` | user | Get subcategory by ID |
+| Method | Endpoint | Auth  | Description             |
+| ------ | -------- | ----- | ----------------------- |
+| POST   | `/`      | admin | Create subcategory      |
+| PUT    | `/:id`   | admin | Update subcategory      |
+| DELETE | `/:id`   | admin | Soft-delete subcategory |
+| GET    | `/:id`   | user  | Get subcategory by ID   |
 
 ### Products — `/api/v1`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/admin/products` | admin | Create product (multiple `images` files) |
-| PUT | `/admin/products/:id` | admin | Update product |
-| DELETE | `/admin/products/:id` | admin | Soft-delete product |
-| PUT | `/admin/products/:id/stock` | admin | Update stock |
-| GET | `/products` | No | List all products |
-| GET | `/products/:id` | No | Get product by ID |
-| GET | `/products/category/:categoryId` | No | Products by category |
-| GET | `/products/subcategory/:categoryId` | No | Products by subcategory |
+| Method | Endpoint                            | Auth  | Description                              |
+| ------ | ----------------------------------- | ----- | ---------------------------------------- |
+| POST   | `/admin/products`                   | admin | Create product (multiple `images` files) |
+| PUT    | `/admin/products/:id`               | admin | Update product                           |
+| DELETE | `/admin/products/:id`               | admin | Soft-delete product                      |
+| PUT    | `/admin/products/:id/stock`         | admin | Update stock                             |
+| GET    | `/products`                         | No    | List all products                        |
+| GET    | `/products/:id`                     | No    | Get product by ID                        |
+| GET    | `/products/category/:categoryId`    | No    | Products by category                     |
+| GET    | `/products/subcategory/:categoryId` | No    | Products by subcategory                  |
 
 ### Cart — `/api/v1/cart`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/` | user | Add item to cart |
-| GET | `/` | user | View cart |
-| PUT | `/:productId` | user | Update item quantity |
-| DELETE | `/:productId` | user | Remove item |
-| DELETE | `/` | user | Clear cart |
+| Method | Endpoint      | Auth | Description          |
+| ------ | ------------- | ---- | -------------------- |
+| POST   | `/`           | user | Add item to cart     |
+| GET    | `/`           | user | View cart            |
+| PUT    | `/:productId` | user | Update item quantity |
+| DELETE | `/:productId` | user | Remove item          |
+| DELETE | `/`           | user | Clear cart           |
 
 ### Orders — `/api/v1`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/orders/checkout` | user | Checkout from cart |
-| GET | `/orders` | user | View my orders |
-| GET | `/orders/:id` | user | View order details |
-| GET | `/admin/orders` | admin | View all orders |
-| PATCH | `/admin/orders/:id/status` | admin | Update order status |
+| Method | Endpoint                   | Auth  | Description         |
+| ------ | -------------------------- | ----- | ------------------- |
+| POST   | `/orders/checkout`         | user  | Checkout from cart  |
+| GET    | `/orders`                  | user  | View my orders      |
+| GET    | `/orders/:id`              | user  | View order details  |
+| GET    | `/admin/orders`            | admin | View all orders     |
+| PATCH  | `/admin/orders/:id/status` | admin | Update order status |
 
 ### HR — Staff — `/api/v1/admin`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/staff` | admin | Add staff member |
-| GET | `/staff` | admin | List all staff |
-| GET | `/staff/:id` | admin | Get staff details |
-| PUT | `/staff/:id` | admin | Update staff info |
+| Method | Endpoint     | Auth  | Description       |
+| ------ | ------------ | ----- | ----------------- |
+| POST   | `/staff`     | admin | Add staff member  |
+| GET    | `/staff`     | admin | List all staff    |
+| GET    | `/staff/:id` | admin | Get staff details |
+| PUT    | `/staff/:id` | admin | Update staff info |
 | DELETE | `/staff/:id` | admin | Soft-delete staff |
 
 ### HR — Attendance — `/api/v1/staff`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/check-in` | staff | Check in for the day |
-| POST | `/check-out` | staff | Check out for the day |
+| Method | Endpoint     | Auth  | Description           |
+| ------ | ------------ | ----- | --------------------- |
+| POST   | `/check-in`  | staff | Check in for the day  |
+| POST   | `/check-out` | staff | Check out for the day |
 
 Check-in marks late if after 9:00 AM. Check-out calculates hours worked and creates deductions for incomplete hours or late arrival. Uses Redis with a 48-hour TTL. If staff checked in yesterday but never checked out, they are automatically marked absent on their next check-in.
 
 ### HR — Deductions — `/api/v1/admin/staff`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| POST | `/:id/deductions` | admin | Add deduction for staff |
-| GET | `/:id/deductions` | admin | List staff deductions |
-| PUT | `/:id/deductions/:deductionId` | admin | Update deduction |
-| DELETE | `/:id/deductions/:deductionId` | admin | Remove deduction |
+| Method | Endpoint                       | Auth  | Description             |
+| ------ | ------------------------------ | ----- | ----------------------- |
+| POST   | `/:id/deductions`              | admin | Add deduction for staff |
+| GET    | `/:id/deductions`              | admin | List staff deductions   |
+| PUT    | `/:id/deductions/:deductionId` | admin | Update deduction        |
+| DELETE | `/:id/deductions/:deductionId` | admin | Remove deduction        |
 
 ### HR — Salary — `/api/v1/admin/staff`
 
-| Method | Endpoint | Auth | Description |
-|---|---|---|---|
-| GET | `/:id/salary/:month` | admin | Calculate monthly salary |
-| POST | `/:id/salary/:month/pay` | admin | Mark salary as paid |
-| PUT | `/:id/salary/:month/adjust` | admin | Add salary adjustment |
+| Method | Endpoint                    | Auth  | Description              |
+| ------ | --------------------------- | ----- | ------------------------ |
+| GET    | `/:id/salary/:month`        | admin | Calculate monthly salary |
+| POST   | `/:id/salary/:month/pay`    | admin | Mark salary as paid      |
+| PUT    | `/:id/salary/:month/adjust` | admin | Add salary adjustment    |
 
 **Salary formula:**
 
@@ -354,7 +354,7 @@ Clients must authenticate on connect using one of:
 
 ```javascript
 const socket = io("http://localhost:3000", {
-  extraHeaders: { authorization: "user YOUR_TOKEN" }
+  extraHeaders: { authorization: "user YOUR_TOKEN" },
 });
 ```
 
@@ -362,7 +362,7 @@ const socket = io("http://localhost:3000", {
 
 ```javascript
 const socket = io("http://localhost:3000", {
-  auth: { token: "user YOUR_TOKEN" }
+  auth: { token: "user YOUR_TOKEN" },
 });
 ```
 
@@ -370,11 +370,11 @@ const socket = io("http://localhost:3000", {
 
 ### Events
 
-| Direction | Event | Auth Required | Description |
-|---|---|---|---|
-| Client → Server | `admin:send-offer` | admin | Broadcast an offer to all connected users |
-| Server → Client | `user:receive-offer` | — | Offer payload sent to all clients |
-| Server → Client | `error` | — | Error message string |
+| Direction       | Event                | Auth Required | Description                               |
+| --------------- | -------------------- | ------------- | ----------------------------------------- |
+| Client → Server | `admin:send-offer`   | admin         | Broadcast an offer to all connected users |
+| Server → Client | `user:receive-offer` | —             | Offer payload sent to all clients         |
+| Server → Client | `error`              | —             | Error message string                      |
 
 **`admin:send-offer` payload:**
 
@@ -395,7 +395,7 @@ Offers are persisted to MongoDB before being broadcast. Non-admin users who emit
 ```javascript
 // User — receive offers
 const socket = io("http://localhost:3000", {
-  auth: { token: "user YOUR_JWT_TOKEN" }
+  auth: { token: "user YOUR_JWT_TOKEN" },
 });
 
 socket.on("user:receive-offer", (offer) => {
@@ -404,7 +404,7 @@ socket.on("user:receive-offer", (offer) => {
 
 // Admin — send offer
 const adminSocket = io("http://localhost:3000", {
-  auth: { token: "admin YOUR_ADMIN_JWT_TOKEN" }
+  auth: { token: "admin YOUR_ADMIN_JWT_TOKEN" },
 });
 
 adminSocket.emit("admin:send-offer", {
@@ -412,7 +412,7 @@ adminSocket.emit("admin:send-offer", {
   title: "Flash Sale",
   message: "50% off for the next 2 hours",
   discountCode: "FLASH50",
-  expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000)
+  expiresAt: new Date(Date.now() + 2 * 60 * 60 * 1000),
 });
 ```
 
