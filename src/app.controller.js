@@ -12,6 +12,9 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import jwt from "jsonwebtoken";
 import { messageModel } from "./database/model/message.model.js";
+import staffRouter from "./modules/hrManagementSystem/staffMange/staff.controller.js";
+import attendanceRouter from "./modules/hrManagementSystem/attendance/attendance.controller.js";
+import deductionRouter from "./modules/hrManagementSystem/deduction/deduction.controller.js";
 
 export const bootstrap = () => {
   const app = express();
@@ -78,6 +81,9 @@ export const bootstrap = () => {
   app.use("/api/v1", productRouter);
   app.use("/api/v1/cart", cartRouter);
   app.use("/api/v1", orderRouter);
+  app.use("/api/v1/admin", staffRouter);
+  app.use("/api/v1/staff", attendanceRouter);
+  app.use("/api/v1/admin/staff", deductionRouter);
 
   server.listen(env.port, () => {
     console.log("server working");

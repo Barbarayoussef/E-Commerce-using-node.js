@@ -150,7 +150,7 @@ export const forgetPassword = async (req, res) => {
   }
   let otp = Math.floor(100000 + Math.random() * 10000);
   await client.set(`${user.email}:otp`, otp, {
-    EX: 300, // Expire after 5 minutes
+    EX: 300,
   });
   await sendEmail(email, "Reset your password", `Your OTP is ${otp}`, null);
   return res.status(200).json({ message: "OTP sent to your email" });
