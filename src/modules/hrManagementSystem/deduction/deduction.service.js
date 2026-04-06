@@ -16,6 +16,8 @@ export const addDeduction = async (req, res) => {
 
 export const getStaffDeductions = async (req, res) => {
   let { id } = req.params;
+  let staff = await staffModel.findById(id);
+  if (!staff) return res.status(404).json({ message: "Staff not found" });
   let deductions = await deductionModel.find({ staff: id });
   if (deductions.length === 0) {
     return res

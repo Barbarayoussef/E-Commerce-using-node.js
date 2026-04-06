@@ -4,7 +4,7 @@ import { userModel } from "../../../database/model/user.model.js";
 export const addStaffMember = async (req, res) => {
   let { userId, dailySalary, department } = req.body;
   let foundedUser = await userModel.findById(userId);
-  if (!foundedUser) {
+  if (!foundedUser || foundedUser.isDeleted) {
     return res.status(404).json({ message: "user  not found" });
   }
   let foundedStaff = await staffModel.findOne({ user: userId });
@@ -57,6 +57,7 @@ export const softDeleteStaff = async (req, res) => {
     return res.status(404).json({ message: "staff not found" });
   }
   let user = await userModel.findById(staff.user);
+  if (!user) return res.status(404).json({ message: "User not found" });
   staff.isActive = false;
   staff.deletedAt = Date.now();
   staff.isDeleted = true;

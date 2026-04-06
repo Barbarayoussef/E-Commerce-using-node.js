@@ -10,6 +10,11 @@ import {
 import { auth } from "../../middleware/auth.js";
 import { authorize } from "../../middleware/authorize.js";
 import { upload } from "../../middleware/multer.js";
+import { validation } from "../../utils/validation.js";
+import {
+  addCategorySchema,
+  updateCategorySchema,
+} from "./category.validation.js";
 
 let router = Router();
 router.post(
@@ -21,6 +26,7 @@ router.post(
     next();
   },
   upload.single("image"),
+  validation(addCategorySchema),
   addCategory,
 );
 router.put(
@@ -33,6 +39,7 @@ router.put(
   },
 
   upload.single("image"),
+  validation(updateCategorySchema),
   updateCategory,
 );
 router.delete("/:id", auth, authorize("admin"), softDelete);

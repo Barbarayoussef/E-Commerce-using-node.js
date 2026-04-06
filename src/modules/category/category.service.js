@@ -11,7 +11,7 @@ export const addCategory = async (req, res) => {
   if (categoryFounded) {
     return res.status(400).json({ message: "Category already exists" });
   }
-  let image = `${env.baseURL}/uploads/${req.file.filename}`;
+  let image = req.file.path;
   let category = await categoryModel.create({ name, image });
   return res
     .status(200)
@@ -24,7 +24,7 @@ export const updateCategory = async (req, res) => {
   }
   let { name } = req.body;
   if (req.file) {
-    category.image = `${env.baseURL}/uploads/${req.file.filename}`;
+    category.image = req.file.path;
   }
   name ? (category.name = name) : null;
   await category.save();

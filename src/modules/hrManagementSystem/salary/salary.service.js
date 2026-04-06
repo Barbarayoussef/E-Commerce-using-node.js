@@ -1,6 +1,7 @@
 export const calculateSalary = async (req, res) => {
   let { id, month } = req.params;
   let staff = await staffModel.findById(id);
+  if (!staff) return res.status(404).json({ message: "Staff not found" });
 
   let report = staff.monthlyReports.find((r) => r.month === month);
 
@@ -48,8 +49,15 @@ export const adjustSalary = async (req, res) => {
   let { id, month } = req.params;
   let staff = await staffModel.findById(id);
   if (!staff) return res.status(404).json({ message: "staff not found" });
+  let report = staff.monthlyReports.find((r) => r.month === month);
+  if (report.isPaid) {
+    return res
+      .status(400)
+      .json({ message: "Cannot adjust salary that is already paid" });
+  }
   let { amount, reason } = req.body;
   staff.adjustment.push({ amount, reason, createdAt: Date.now(), month });
+  report.isCalculated = false;
   await staff.save();
   res.json({ message: "salary adjusted successfully" });
 };

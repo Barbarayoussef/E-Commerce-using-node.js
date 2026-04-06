@@ -41,6 +41,9 @@ export const updateSubcategory = async (req, res) => {
 export const softDelete = async (req, res) => {
   let { id } = req.params;
   let subcategory = await subcategoryModel.findById(id);
+  if (!subcategory)
+    return res.status(404).json({ message: "Subcategory not found" });
+
   subcategory.isDeleted = true;
   subcategory.deletedAt = Date.now();
   await subcategory.save();
