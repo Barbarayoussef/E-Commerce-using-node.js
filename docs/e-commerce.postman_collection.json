@@ -1,0 +1,2071 @@
+{
+  "info": {
+    "_postman_id": "857b1624-b931-4441-9f29-4fead3e796a1",
+    "name": "e-commerce",
+    "description": "## e-commerce API\n\nA full-featured e-commerce backend API built with **Node.js** and **Express**, running locally at `http://localhost:3000/api/v1`. This collection covers the complete lifecycle of an e-commerce platform, organized into the following functional modules:\n\n- **Auth** — User registration, login, token refresh, and password management.\n- **User** — View and update user profiles, manage account details.\n- **Category & SubCategory** — CRUD operations for product categories and their nested sub-categories.\n- **Products** — Create, read, update, and soft-delete products, with support for filtering (e.g., by price).\n- **Cart** — Add items to cart, view cart contents, update quantities, remove items, and apply coupons.\n- **Orders** — Place and manage orders; view all orders or filter by user or ID.\n- **HR Management System** — Internal admin module covering:\n  - **Staff** — Add, update, retrieve, and remove staff members.\n  - **Deductions** — Manage salary deductions per staff member.\n  - **Attendance** — Track check-in and check-out records.\n\n> All endpoints target a local development server. Authentication is required for most write operations.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "29843936"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "sign up",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "barbaraAdmin",
+                  "type": "text",
+                  "uuid": "4777ad72-19c7-4fdb-9f33-8a44fe4dab08"
+                },
+                {
+                  "key": "email",
+                  "value": "7b56cc2108@emailax.pro",
+                  "type": "text",
+                  "uuid": "e07a5c9b-dc2e-467d-a08a-5025ed38f7c8"
+                },
+                {
+                  "key": "password",
+                  "value": "test@123",
+                  "type": "text",
+                  "uuid": "50e93294-daaf-433f-9324-497c1e14bcaa"
+                },
+                {
+                  "key": "confirmPassword",
+                  "value": "test@123",
+                  "type": "text",
+                  "uuid": "71e7e873-04ec-44b8-8ec3-ee331297d2f7"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "f76ccb7f-897e-4feb-b5d1-94145d63c027",
+                  "src": "/C:/Users/baray/Downloads/woman-floral-traditional-costume/73cf8ac6-31c7-448b-aa3b-0840d9b313a7.jpg"
+                },
+                {
+                  "key": "phone",
+                  "value": "01288039572",
+                  "type": "text",
+                  "uuid": "2662392b-6433-40c5-89e3-08e1b3f9dc92"
+                },
+                {
+                  "key": "role",
+                  "value": "admin",
+                  "type": "text",
+                  "uuid": "992f1576-004f-4be8-a4f0-5c4d7daebd30"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/signup",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);\r",
+                  "pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"email\":\"01c10896cc@emailax.pro\",\r\n    \"password\":\"test@123\"\r\n   \r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "resend verification",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);\r",
+                  "pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"email\":\"8b5ddff11a@emailax.pro\"\r\n   \r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/resend-verification",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "resend-verification"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "forget password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);\r",
+                  "pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"email\":\"07b9a1b44b@emailax.pro\"\r\n   \r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/forget-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forget-password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reset password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();\r",
+                  "pm.collectionVariables.set(\"accessToken\", jsonData.accessToken);\r",
+                  "pm.collectionVariables.set(\"refreshToken\", jsonData.refreshToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \r\n    \"email\":\"07b9a1b44b@emailax.pro\",\r\n    \"otp\":\"108360\",\r\n    \"newPassword\":\"test@123\"\r\n   \r\n    }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/auth/reset-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "reset-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Handles all authentication-related operations for the e-commerce platform. Includes endpoints for user registration, login, logout, password reset, and token management. These endpoints are the entry point for securing access to the rest of the API."
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "get profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y5OGIyYWM4ZWQ3OWY1MTc2MDZkNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MjEyNzUwLCJleHAiOjE3NzUyOTkxNTB9.Z5b9gJ4cInsJV9m4KQOe7eU1bcLHYCi2iefBqmUercc",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y5OGIyYWM4ZWQ3OWY1MTc2MDZkNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MjEyNzUwLCJleHAiOjE3NzUyOTkxNTB9.Z5b9gJ4cInsJV9m4KQOe7eU1bcLHYCi2iefBqmUercc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "barbara123",
+                  "type": "text",
+                  "uuid": "9e36c535-c9b8-4f78-8718-79a0915ba78f"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "584b5cf2-cc85-40e9-b5ee-ad88a70749da",
+                  "src": "/C:/Users/baray/Downloads/woman-floral-traditional-costume/73cf8ac6-31c7-448b-aa3b-0840d9b313a7.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "soft delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y5OGIyYWM4ZWQ3OWY1MTc2MDZkNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MjEyNzUwLCJleHAiOjE3NzUyOTkxNTB9.Z5b9gJ4cInsJV9m4KQOe7eU1bcLHYCi2iefBqmUercc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "barbara123",
+                  "type": "text",
+                  "uuid": "9e36c535-c9b8-4f78-8718-79a0915ba78f"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "584b5cf2-cc85-40e9-b5ee-ad88a70749da",
+                  "src": "/C:/Users/baray/Downloads/woman-floral-traditional-costume/73cf8ac6-31c7-448b-aa3b-0840d9b313a7.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/profile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "upload avatar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y5OGIyYWM4ZWQ3OWY1MTc2MDZkNiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MjEyNzUwLCJleHAiOjE3NzUyOTkxNTB9.Z5b9gJ4cInsJV9m4KQOe7eU1bcLHYCi2iefBqmUercc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "584b5cf2-cc85-40e9-b5ee-ad88a70749da",
+                  "src": "/C:/Users/baray/Downloads/img_avatar.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/users/upload-avatar",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "upload-avatar"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Contains endpoints for managing user accounts. Covers retrieving user profiles, updating personal information, changing passwords, and deleting accounts. These routes are typically protected and require an authenticated session."
+    },
+    {
+      "name": "Category",
+      "item": [
+        {
+          "name": "add category",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ1MDk0NiwiZXhwIjoxNzc1NTM3MzQ2fQ.Z05FnLBUshRuyVxq4E3AxN6e2nsy4A2XFZ3eSvIgzfg",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "medicine",
+                  "type": "text",
+                  "uuid": "2dc7b3a2-9530-42b6-9cd2-7eaf68d47ed9"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "7f86e317-3a61-43b5-9fae-395301e615ec",
+                  "src": "/C:/Users/baray/Downloads/images.jpeg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTIyMDYwMCwiZXhwIjoxNzc1MzA3MDAwfQ.GD83-JKn6kLROQWUGlEuqu5ELY4yJUe3E9erUYTYsBY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "food5",
+                  "type": "text",
+                  "uuid": "2dc7b3a2-9530-42b6-9cd2-7eaf68d47ed9"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "7f86e317-3a61-43b5-9fae-395301e615ec",
+                  "src": "/C:/Users/baray/Downloads/ImageForNews_808838_17461258694907356.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/categories/69cfb90b973bec8acddfba25",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "69cfb90b973bec8acddfba25"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "soft delete",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTIyMDYwMCwiZXhwIjoxNzc1MzA3MDAwfQ.GD83-JKn6kLROQWUGlEuqu5ELY4yJUe3E9erUYTYsBY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "food5",
+                  "type": "text",
+                  "uuid": "2dc7b3a2-9530-42b6-9cd2-7eaf68d47ed9"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "7f86e317-3a61-43b5-9fae-395301e615ec",
+                  "src": "/C:/Users/baray/Downloads/ImageForNews_808838_17461258694907356.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/categories/69cfb90b973bec8acddfba25",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "69cfb90b973bec8acddfba25"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTIyMDYwMCwiZXhwIjoxNzc1MzA3MDAwfQ.GD83-JKn6kLROQWUGlEuqu5ELY4yJUe3E9erUYTYsBY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/categories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "categories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "all for public",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2YxMWYxNzEyMTY1Y2U0M2UwZDE5NiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1Mjk2MTA1LCJleHAiOjE3NzUzODI1MDV9.e2iJ4JY4mE8kHhYvuAEuvJ1OUMFsP_ZbK47NSTmGdLw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/categories/all",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "all"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "subcategory for category",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2YxMWYxNzEyMTY1Y2U0M2UwZDE5NiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1Mjk2MTA1LCJleHAiOjE3NzUzODI1MDV9.e2iJ4JY4mE8kHhYvuAEuvJ1OUMFsP_ZbK47NSTmGdLw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/categories/69cfb90b973bec8acddfba25/subcategories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "69cfb90b973bec8acddfba25",
+                "subcategories"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Manages product categories within the platform. Provides endpoints to create, retrieve, update, and delete top-level categories used to organize and classify products in the store."
+    },
+    {
+      "name": "subCategory",
+      "item": [
+        {
+          "name": "create subcategory",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTIyMDYwMCwiZXhwIjoxNzc1MzA3MDAwfQ.GD83-JKn6kLROQWUGlEuqu5ELY4yJUe3E9erUYTYsBY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"fresh\",\r\n    \"categoryName\":\"food\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/subcategories",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "subcategories"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update subcategory",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTIyMDYwMCwiZXhwIjoxNzc1MzA3MDAwfQ.GD83-JKn6kLROQWUGlEuqu5ELY4yJUe3E9erUYTYsBY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"fresh food\",\r\n    \"categoryName\":\"food\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/subcategories/69cfdbb52aa503170d176bb2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "subcategories",
+                "69cfdbb52aa503170d176bb2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get by id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2YxMWYxNzEyMTY1Y2U0M2UwZDE5NiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1Mjk2MTA1LCJleHAiOjE3NzUzODI1MDV9.e2iJ4JY4mE8kHhYvuAEuvJ1OUMFsP_ZbK47NSTmGdLw",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/subcategories/69cfde6b04d175e947799ef7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "subcategories",
+                "69cfde6b04d175e947799ef7"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Handles subcategories that fall under main product categories. Supports creating, updating, and deleting subcategories, allowing for a more granular and structured product classification system."
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "create product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMwNDE5OCwiZXhwIjoxNzc1MzkwNTk4fQ.hhAoXNjG-A7_YFYPQrSee5j83c6yzSgf4gzLrhz6DOc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "phone",
+                  "type": "text",
+                  "uuid": "d6ae71ef-5c47-4dfb-a36c-9333b44ebf3e"
+                },
+                {
+                  "key": "stock",
+                  "value": "10",
+                  "type": "text",
+                  "uuid": "7053f306-272c-454e-aeeb-fbeb341042af"
+                },
+                {
+                  "key": "price",
+                  "value": "10000",
+                  "type": "text",
+                  "uuid": "9861b1af-e596-4f0f-809b-e142bd29a933"
+                },
+                {
+                  "key": "categoryId",
+                  "value": "69cfb90b973bec8acddfba25",
+                  "type": "text",
+                  "uuid": "63c8e3b1-8ee8-4205-bb4b-f7c0c9026651"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "2d6c92bd-7b6f-464b-83aa-8e827fde2c94",
+                  "src": [
+                    "/C:/Users/baray/Downloads/5195.webp",
+                    "/C:/Users/baray/Downloads/images (1).jpeg"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/admin/products",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMwNDE5OCwiZXhwIjoxNzc1MzkwNTk4fQ.hhAoXNjG-A7_YFYPQrSee5j83c6yzSgf4gzLrhz6DOc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "update phone",
+                  "type": "text",
+                  "uuid": "af3b1d56-c08d-4485-9e82-9aaaa2dfbbbb"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "22b69712-523b-45cb-8c61-b2d0827f17cf",
+                  "src": "/C:/Users/baray/Downloads/5195.webp"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/admin/products/69d0ff3dbfe28d42026a61c9",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "products",
+                "69d0ff3dbfe28d42026a61c9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "soft delete",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/admin/products/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update stock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMwNDE5OCwiZXhwIjoxNzc1MzkwNTk4fQ.hhAoXNjG-A7_YFYPQrSee5j83c6yzSgf4gzLrhz6DOc",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"stock\":20\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/admin/products/69d0ff3dbfe28d42026a61c9/stock",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "products",
+                "69d0ff3dbfe28d42026a61c9",
+                "stock"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/products/?minPrice=20000",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "minPrice",
+                  "value": "20000"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/products/69d0ff3dbfe28d42026a61c9",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "69d0ff3dbfe28d42026a61c9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get products of category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/products/category/69cfd6a1ff89066b71f571c6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "category",
+                "69cfd6a1ff89066b71f571c6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get products of subcategory",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/api/v1/products/subcategory/:id",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "products",
+                "subcategory",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Covers all product-related operations in the store. Includes endpoints for creating, updating, soft-deleting, and retrieving products, with support for filtering by price and other attributes. Admin-only routes are included for product management."
+    },
+    {
+      "name": "cart",
+      "item": [
+        {
+          "name": "add item to cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productId\":\"69d0ff3dbfe28d42026a61c9\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/cart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "view cart",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"productId\":\"69d0ff3dbfe28d42026a61c9\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/cart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update Quantity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/cart/69d0ff3dbfe28d42026a61c9",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "69d0ff3dbfe28d42026a61c9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remove item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/cart/69d0ff3dbfe28d42026a61c9",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "cart",
+                "69d0ff3dbfe28d42026a61c9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "clear entire cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/cart",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "cart"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Manages the shopping cart functionality. Includes endpoints to add items to the cart, view the current cart, update item quantities, remove specific items, and clear the entire cart. Designed to support the full cart lifecycle before checkout."
+    },
+    {
+      "name": "order",
+      "item": [
+        {
+          "name": "checkout cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/orders/checkout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "checkout"
+              ]
+            },
+            "description": "Processes the checkout for the authenticated user's cart by placing an order.\n\n**Method:** POST  \n**Endpoint:** `/api/v1/orders/checkout`\n\n**Authentication:**  \nRequires a Bearer/user JWT token passed in the `Authorization` header. The token must belong to a user with the `user` role.\n\n**Request Body:**\n| Field      | Type   | Description                        |\n|------------|--------|------------------------------------|\n| `quantity` | Number | The quantity of items to order     |\n\n**Notes:**\n- The user must be authenticated via a valid JWT token.\n- The request creates a new order based on the current cart contents and the specified quantity."
+          },
+          "response": []
+        },
+        {
+          "name": "view my orders",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "view order y id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "user eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzc1MzE0NTI4LCJleHAiOjE3NzU0MDA5Mjh9.HT4KOXi8T6Fw8aUt9uXYawuc1dfsP13gx_CBHtDYHKE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/orders/69d12ff498c2b5ba87347d8a",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "orders",
+                "69d12ff498c2b5ba87347d8a"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "view all",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTIyMDYwMCwiZXhwIjoxNzc1MzA3MDAwfQ.GD83-JKn6kLROQWUGlEuqu5ELY4yJUe3E9erUYTYsBY",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"quantity\":7\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/v1/orders",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "v1",
+                "orders"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "description": "Handles order processing and management. Provides endpoints to place orders (checkout), view all orders, retrieve a specific order by ID, and manage order status. Supports both user-facing and admin-facing order operations."
+    },
+    {
+      "name": "HR management system",
+      "item": [
+        {
+          "name": "staff",
+          "item": [
+            {
+              "name": "add new staff",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ1MDk0NiwiZXhwIjoxNzc1NTM3MzQ2fQ.Z05FnLBUshRuyVxq4E3AxN6e2nsy4A2XFZ3eSvIgzfg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\":\"69cf98b2ac8ed79f517606d6\",\r\n    \"dailySalary\":500,\r\n    \"department\":\"IT\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update staff",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMyODU0MCwiZXhwIjoxNzc1NDE0OTQwfQ.Nc2zzlp_tJqHuDLRSK2hnIVZ9iS97yJXNF7su_CQuKM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"dailySalary\":500,\r\n    \"department\":\"ITI\",\r\n  \r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/69d247cd4e0decbaf920e3f7",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    "69d247cd4e0decbaf920e3f7"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "gat all",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMyODU0MCwiZXhwIjoxNzc1NDE0OTQwfQ.Nc2zzlp_tJqHuDLRSK2hnIVZ9iS97yJXNF7su_CQuKM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\":\"69cf10bda43ceb68bd2f7936\",\r\n    \"dailySalary\":500,\r\n    \"department\":\"IT\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get details",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMyODU0MCwiZXhwIjoxNzc1NDE0OTQwfQ.Nc2zzlp_tJqHuDLRSK2hnIVZ9iS97yJXNF7su_CQuKM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\":\"69cf10bda43ceb68bd2f7936\",\r\n    \"dailySalary\":500,\r\n    \"department\":\"IT\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/69d247cd4e0decbaf920e3f7",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    "69d247cd4e0decbaf920e3f7"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "soft delete",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTMyODU0MCwiZXhwIjoxNzc1NDE0OTQwfQ.Nc2zzlp_tJqHuDLRSK2hnIVZ9iS97yJXNF7su_CQuKM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"userId\":\"69cf10bda43ceb68bd2f7936\",\r\n    \"dailySalary\":500,\r\n    \"department\":\"IT\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/69d24ad1c365041bdf2b3037",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    "69d24ad1c365041bdf2b3037"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "deduction",
+          "item": [
+            {
+              "name": "add deduction",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ1MDk0NiwiZXhwIjoxNzc1NTM3MzQ2fQ.Z05FnLBUshRuyVxq4E3AxN6e2nsy4A2XFZ3eSvIgzfg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"amount\":200,\r\n    \"reason\":\"lazy\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/deductions",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "deductions"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get staff deductions",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ1MDk0NiwiZXhwIjoxNzc1NTM3MzQ2fQ.Z05FnLBUshRuyVxq4E3AxN6e2nsy4A2XFZ3eSvIgzfg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/deductions",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "deductions"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "update deduction",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ2NTczOCwiZXhwIjoxNzc1NTUyMTM4fQ.giCIDGPDTSHw6ZTCUUyCT-Ep7kOKbbrBPv7C5uLiyBk",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"amount\":100,\r\n    \"reason\":\"still lazy\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/deductions/:deductionId",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "deductions",
+                    ":deductionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    },
+                    {
+                      "key": "deductionId",
+                      "value": "69d3bec9472326aaa77dfd30"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete deduction",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ1MDk0NiwiZXhwIjoxNzc1NTM3MzQ2fQ.Z05FnLBUshRuyVxq4E3AxN6e2nsy4A2XFZ3eSvIgzfg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/deductions/:deductionId",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "deductions",
+                    ":deductionId"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    },
+                    {
+                      "key": "deductionId",
+                      "value": "69d3bf2ff731bc34cd5d9e18"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "attendence",
+          "item": [
+            {
+              "name": "check in",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "staff eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTc3NTQ2MjE5MywiZXhwIjoxNzc1NTQ4NTkzfQ.v0HwPF03yEI2W8Lv2Az1xGJgV6okZwfC7IoBKzu1-jM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/staff/check-in",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "staff",
+                    "check-in"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "check out",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "staff eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZDEyNGZlNzRiOGYxYjhhYTgxNTVlNyIsInJvbGUiOiJzdGFmZiIsImlhdCI6MTc3NTQ2MjE5MywiZXhwIjoxNzc1NTQ4NTkzfQ.v0HwPF03yEI2W8Lv2Az1xGJgV6okZwfC7IoBKzu1-jM",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/staff/check-out",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "staff",
+                    "check-out"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "salary",
+          "item": [
+            {
+              "name": "calculate salary",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ1MDk0NiwiZXhwIjoxNzc1NTM3MzQ2fQ.Z05FnLBUshRuyVxq4E3AxN6e2nsy4A2XFZ3eSvIgzfg",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/salary/:month",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "salary",
+                    ":month"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    },
+                    {
+                      "key": "month",
+                      "value": "2026-04"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "mark paid",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ2NTczOCwiZXhwIjoxNzc1NTUyMTM4fQ.giCIDGPDTSHw6ZTCUUyCT-Ep7kOKbbrBPv7C5uLiyBk",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/salary/:month/pay",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "salary",
+                    ":month",
+                    "pay"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    },
+                    {
+                      "key": "month",
+                      "value": "2026-04"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "adjust salary",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "admin eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2ZiNzViNjZiNTA3ZGU3ZTNhOTAyNiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3NTQ2NTczOCwiZXhwIjoxNzc1NTUyMTM4fQ.giCIDGPDTSHw6ZTCUUyCT-Ep7kOKbbrBPv7C5uLiyBk",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                },
+                "url": {
+                  "raw": "http://localhost:3000/api/v1/admin/staff/:id/salary/:month/adjust",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "3000",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "staff",
+                    ":id",
+                    "salary",
+                    ":month",
+                    "adjust"
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "69d366bfa50f266f37a75ef9"
+                    },
+                    {
+                      "key": "month",
+                      "value": "2026-04"
+                    }
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ],
+      "description": "Groups all HR-related endpoints within the e-commerce platform. Covers staff management (add, update, retrieve, soft-delete), deduction tracking (add, update, retrieve, delete), and attendance management (check-in, check-out). This folder serves as the internal HR module for managing employees and their records."
+    }
+  ],
+  "variable": [
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    }
+  ]
+}
