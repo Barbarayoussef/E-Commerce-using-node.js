@@ -53,6 +53,7 @@ export const adjustSalary = async (req, res) => {
   let staff = await staffModel.findById(id);
   if (!staff) return res.status(404).json({ message: "staff not found" });
   let report = staff.monthlyReports.find((r) => r.month === month);
+  if (!report) return res.status(404).json({ message: "report not found" });
   if (report.isPaid) {
     return res
       .status(400)
