@@ -417,6 +417,10 @@ adminSocket.emit("admin:send-offer", {
 ```
 
 ---
+## Postman Collection
+
+Import `docs/postman_collection.json` into Postman to test all API endpoints.
+
 
 ## License
 
