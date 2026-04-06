@@ -5,7 +5,12 @@ export const addDeduction = async (req, res) => {
   if (!staff || staff.isActive == false)
     return res.status(404).json({ message: "staff not found" });
   let month = new Date().toISOString().slice(0, 7);
-  let deduction = await deductionModel.create({ staff, amount, reason, month });
+  let deduction = await deductionModel.create({
+    staff: id,
+    amount,
+    reason,
+    month,
+  });
   res.json({ message: "deduction added successfully", deduction });
 };
 

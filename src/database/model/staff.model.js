@@ -24,17 +24,24 @@ let staffSchema = mongoose.Schema({
   monthlyReports: [
     {
       month: String,
-      totalDaysWorked: Number,
-      totalDeductions: Number,
-      finalSalary: Number,
-      isPaid: Boolean,
+      totalDaysWorked: { type: Number, default: 0 },
+      totalDeductions: { type: Number, default: 0 },
+      finalSalary: { type: Number, default: 0 },
+      isPaid: { type: Boolean, default: false },
       paidAt: Date,
+      isCalculated: { type: Boolean, default: false },
     },
   ],
   isDeleted: { type: Boolean, default: false },
   deletedAt: { type: Date, default: null },
-  totalWorkedHours: { type: Number, default: 0 },
-  totalDeductions: { type: Number, default: 0 },
+  adjustment: [
+    {
+      reason: String,
+      amount: Number,
+      createdAt: Date,
+      month: String,
+    },
+  ],
 });
 
 export const staffModel = mongoose.model("staff", staffSchema);

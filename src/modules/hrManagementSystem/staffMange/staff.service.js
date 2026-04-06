@@ -53,10 +53,10 @@ export const updateStaffInfo = async (req, res) => {
 export const softDeleteStaff = async (req, res) => {
   let { id } = req.params;
   let staff = await staffModel.findById(id);
-  let user = await userModel.findById(staff.user);
   if (!staff) {
     return res.status(404).json({ message: "staff not found" });
   }
+  let user = await userModel.findById(staff.user);
   staff.isActive = false;
   staff.deletedAt = Date.now();
   staff.isDeleted = true;

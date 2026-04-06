@@ -5,11 +5,33 @@ import { deductionModel } from "../../../database/model/deduction.model.js";
 export const checkIn = async (req, res) => {
   let { id, role } = req.user;
 
-  if (role !== "staff" || role !== "admin") {
+  if (role !== "staff" && role !== "admin") {
     return res
       .status(400)
       .json({ message: "You are not a authorized staff or admin" });
   }
+  let staff = await staffModel.findOne({ user: id });
+  if (!staff) return res.status(404).json({ message: "Staff not found" });
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const dayOfWeek = yesterday.getDay();
+  if (dayOfWeek !== 5 && dayOfWeek !== 6) {
+    const yesterdayStr = yesterday.toISOString().split("T")[0];
+    const yesterdayData = await client.hGetAll(
+      `staff:${id}:date:${yesterdayStr}`,
+    );
+    if (yesterdayData.checkInTime && !yesterdayData.checkOutTime) {
+      const month = yesterdayStr.slice(0, 7);
+      await deductionModel.create({
+        staff: id,
+        reason: "Absent (No checkout recorded)",
+        amount: staff.dailySalary,
+        month,
+        date: yesterday,
+      });
+    }
+  }
+
   let checkInDate = new Date();
   let hours = checkInDate.getHours();
   const today = checkInDate.toISOString().split("T")[0];
@@ -42,7 +64,7 @@ export const checkIn = async (req, res) => {
   // await client.set(`${id}:late`, false);
   // await client.set(`${id}:day`, day);
 
-  await client.expire(`staff:${id}:date:${today}`, 86400);
+  await client.expire(`staff:${id}:date:${today}`, 172800);
   return res.status(200).json({
     message: late ? "Checked in (Late)" : "Checked in on time",
   });
@@ -51,13 +73,12 @@ export const checkIn = async (req, res) => {
 export const checkOut = async (req, res) => {
   let { id, role } = req.user;
 
-  if (role !== "staff" || role !== "admin") {
+  if (role !== "staff" && role !== "admin") {
     return res
       .status(400)
       .json({ message: "You are not a authorized staff or admin" });
   }
-  let staffMember = await staffModel.findById(id);
-
+  let staffMember = await staffModel.findOne({ user: id });
   let checkOutDate = new Date();
   const today = checkOutDate.toISOString().split("T")[0];
   const redisKey = `staff:${id}:date:${today}`;
@@ -78,27 +99,48 @@ export const checkOut = async (req, res) => {
   let checkOutHour24 = checkOutDate.getHours();
   let checkOutHour12 = checkOutHour24 % 12 || 12;
 
-  let totalWorkingHours = 0;
+  let totalWorkedHours = 0;
 
   if (checkOutHour24 >= checkInHour24) {
     let hourDiff = checkOutHour24 - checkInHour24;
     let minuteDiff =
       (checkOutDate.getMinutes() - checkInFullDate.getMinutes()) / 60;
 
-    totalWorkingHours = hourDiff + minuteDiff;
+    totalWorkedHours = hourDiff + minuteDiff;
   }
 
-  staffMember.totalWorkingHours += totalWorkingHours;
+  let month = today.slice(0, 7);
+  if (totalWorkedHours < 8) {
+    let missingHours = 8 - totalWorkedHours;
+    let deductionAmount = (missingHours / 8) * staffMember.dailySalary;
 
-  if (totalWorkingHours < 8) {
-    let month = today.split("-").slice(0, 2).join("-");
     await deductionModel.create({
       staff: id,
-      reason: "Late",
-      amount: staffMember.dailySalary,
+      reason: "Incomplete working hours",
+      amount: deductionAmount,
       month,
+    });
+  }
+  if (checkInData.isLate === "true") {
+    await deductionModel.create({
+      staff: id,
+      reason: "Late Arrival (After 9:00 AM)",
+      amount: staffMember.dailySalary * 0.1,
+      month: month,
       date: new Date(),
     });
+  }
+  let reportIndex = staffMember.monthlyReports.findIndex(
+    (r) => r.month === month,
+  );
+
+  if (reportIndex === -1) {
+    staffMember.monthlyReports.push({
+      month: month,
+      totalDaysWorked: 1,
+    });
+  } else {
+    staffMember.monthlyReports[reportIndex].totalDaysWorked += 1;
   }
 
   await client.hSet(
@@ -112,6 +154,6 @@ export const checkOut = async (req, res) => {
     message: "Checked out successfully",
     checkIn: `${checkInHour12} ${checkInHour24 >= 12 ? "PM" : "AM"}`,
     checkOut: `${checkOutHour12} ${checkOutHour24 >= 12 ? "PM" : "AM"}`,
-    hoursWorked: totalWorkingHours.toFixed(2),
+    hoursWorked: totalWorkedHours.toFixed(2),
   });
 };

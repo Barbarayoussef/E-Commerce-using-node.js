@@ -15,6 +15,7 @@ import { messageModel } from "./database/model/message.model.js";
 import staffRouter from "./modules/hrManagementSystem/staffMange/staff.controller.js";
 import attendanceRouter from "./modules/hrManagementSystem/attendance/attendance.controller.js";
 import deductionRouter from "./modules/hrManagementSystem/deduction/deduction.controller.js";
+import salaryRouter from "./modules/hrManagementSystem/salary/salary.controller.js";
 
 export const bootstrap = () => {
   const app = express();
@@ -84,6 +85,7 @@ export const bootstrap = () => {
   app.use("/api/v1/admin", staffRouter);
   app.use("/api/v1/staff", attendanceRouter);
   app.use("/api/v1/admin/staff", deductionRouter);
+  app.use("/api/v1/admin/staff", salaryRouter);
 
   server.listen(env.port, () => {
     console.log("server working");
