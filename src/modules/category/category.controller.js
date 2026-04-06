@@ -12,11 +12,26 @@ import { authorize } from "../../middleware/authorize.js";
 import { upload } from "../../middleware/multer.js";
 
 let router = Router();
-router.post("", auth, authorize("admin"), upload.single("image"), addCategory);
+router.post(
+  "",
+  auth,
+  authorize("admin"),
+  (req, _, next) => {
+    req.cloudinaryFolder = "categories";
+    next();
+  },
+  upload.single("image"),
+  addCategory,
+);
 router.put(
   "/:id",
   auth,
   authorize("admin"),
+  (req, _, next) => {
+    req.cloudinaryFolder = "categories";
+    next();
+  },
+
   upload.single("image"),
   updateCategory,
 );

@@ -7,6 +7,10 @@ export const addCategory = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: "Please upload an image" });
   }
+  let categoryFounded = await categoryModel.findOne({ name });
+  if (categoryFounded) {
+    return res.status(400).json({ message: "Category already exists" });
+  }
   let image = `${env.baseURL}/uploads/${req.file.filename}`;
   let category = await categoryModel.create({ name, image });
   return res

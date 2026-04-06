@@ -4,9 +4,9 @@ import {
   getStaffDeductions,
   updateDeduction,
   removeDeduction,
-} from "./deduction.service";
-import { auth } from "../../../middleware/auth";
-import { authorize } from "../../../middleware/authorize";
+} from "./deduction.service.js";
+import { auth } from "../../../middleware/auth.js";
+import { authorize } from "../../../middleware/authorize.js";
 
 let router = Router();
 

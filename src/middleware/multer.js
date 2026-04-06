@@ -1,29 +1,23 @@
 import multer from "multer";
-import fs from "fs";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../../config/cloudinary.config.js";
 
-const folder = "./uploads";
-const createFolder = (folder) => {
-  if (!fs.existsSync(folder)) {
-    fs.mkdirSync(folder, { recursive: true });
-  }
-};
-createFolder(folder);
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, folder);
-  },
-
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: (req, file) => {
+    return {
+      folder: req.cloudinaryFolder || "general", // dynamic folder — set this in your controller or route middleware
+      allowed_formats: ["jpg", "jpeg", "png", "webp"],
+      public_id: Date.now() + "-" + file.originalname.split(".")[0],
+    };
   },
 });
+
 const fileFilter = (req, file, cb) => {
   const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    console.log(file.mimetype);
     cb(
       new Error("Invalid file type. Only JPG, PNG and WebP images are allowed"),
       false,

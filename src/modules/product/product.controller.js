@@ -18,6 +18,10 @@ router.post(
   "/admin/products",
   auth,
   authorize("admin"),
+  (req, _, next) => {
+    req.cloudinaryFolder = "products";
+    next();
+  },
   upload.array("images"),
   addProduct,
 );
@@ -25,6 +29,10 @@ router.put(
   "/admin/products/:id",
   auth,
   authorize("admin"),
+  (req, _, next) => {
+    req.cloudinaryFolder = "products";
+    next();
+  },
   upload.array("images"),
   updateProducts,
 );
