@@ -70,68 +70,81 @@ export const checkoutCart = async (req, res) => {
     shipping_address_collection: {
       allowed_countries: ["US", "CA", "EG"],
     },
-    success_url: `${env.baseURL}/api/v1/orders/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${env.baseURL}/api/v1/orders/checkout/cancel`,
+    success_url: `https://example.com/success`,
+    cancel_url: `https://example.com/cancel`,
   });
 
   return res.status(200).json({ url: session.url });
 };
+export const handleStripeWebhook = async (req, res) => {
+  const sig = req.headers["stripe-signature"];
 
-export const handlePaymentSuccess = async (req, res) => {
-  let { session_id } = req.query;
-  console.log(session_id);
+  let event;
 
-  const session = await stripeInstance.checkout.sessions.retrieve(session_id, {
-    expand: ["line_items", `payment_intent.payment_method`],
-  });
-  if (session.payment_status === "paid") {
-    let id = session.client_reference_id;
-    let cart = await cartModel.findOne({ user: id });
-    if (!cart || cart.products.length === 0) {
-      return res.status(400).json({ message: "Cart not found or empty" });
-    }
-    for (const item of cart.products) {
-      let product = await productModel.findById(item.productId);
-      product.stock -= item.quantity;
-      await product.save();
-    }
-    console.log("session", session.customer_details.address);
-    const existingOrder = await orderModel.findOne({
-      paymentIntentId: session.payment_intent,
-    });
-
-    if (existingOrder) {
-      return res.status(200).json({
-        message: "Order already processed",
-        order: existingOrder,
-      });
-    }
-
-    let order = await orderModel.create({
-      user: id,
-      orderStatus: "pending",
-      paymentStatus: "paid",
-      orderDate: new Date(),
-      products: cart.products,
-      totalOrderPrice: cart.totalCartPrice,
-      paymentMethod: "card",
-      shippingAddress: session.customer_details?.address
-        ? JSON.stringify(session.customer_details.address)
-        : "No address provided",
-    });
-    cart.products = [];
-    cart.totalCartPrice = 0;
-    await cart.save();
-    return res
-      .status(200)
-      .json({ message: "Order placed successfully", order });
+  try {
+    event = stripeInstance.webhooks.constructEvent(
+      req.body, // raw body buffer
+      sig, // stripe's signature from headers
+      env.stripeWebhookSecret, // your secret to verify against
+    );
+  } catch (err) {
+    console.error("Webhook signature verification failed:", err.message);
+    return res.status(400).json({ message: `Webhook Error: ${err.message}` });
   }
-  return res.redirect(`${env.baseURL}/api/v1/orders/checkout/cancel`);
+
+  if (event.type === "checkout.session.completed") {
+    // event.data.object contains the full Stripe session object
+    const session = event.data.object;
+
+    if (session.payment_status === "paid") {
+      const existingOrder = await orderModel.findOne({
+        stripeSessionId: session.id,
+      });
+      if (existingOrder) {
+        return res.status(200).json({ received: true });
+      }
+
+      // Get the user ID we stored when creating the Stripe session
+      const userId = session.client_reference_id;
+
+      // Get the user's cart from DB
+      const cart = await cartModel.findOne({ user: userId });
+
+      if (!cart || cart.products.length === 0) {
+        return res.status(400).json({ message: "Cart not found or empty" });
+      }
+
+      // Deduct stock for each product
+      for (const item of cart.products) {
+        const product = await productModel.findById(item.productId);
+        product.stock -= item.quantity;
+        await product.save();
+      }
+
+      // Create the order in your DB
+      await orderModel.create({
+        user: userId,
+        orderStatus: "pending",
+        paymentStatus: "paid",
+        orderDate: new Date(),
+        products: cart.products,
+        totalOrderPrice: cart.totalCartPrice,
+        paymentMethod: "card",
+        stripeSessionId: session.id,
+        shippingAddress: session.customer_details?.address
+          ? JSON.stringify(session.customer_details.address)
+          : "No address provided",
+      });
+
+      // Clear the cart
+      cart.products = [];
+      cart.totalCartPrice = 0;
+      await cart.save();
+    }
+  }
+  return res.status(200).json({ received: true });
 };
 
-export const handlePaymentCancel = async (req, res) => {
-  return res.status(200).json({ message: "Payment cancelled" });
-};
 export const viewMyOrders = async (req, res) => {
   let { id } = req.user;
   let orders = await orderModel.find({ user: id });

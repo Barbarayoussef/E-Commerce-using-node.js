@@ -16,9 +16,15 @@ import staffRouter from "./modules/hrManagementSystem/staffMange/staff.controlle
 import attendanceRouter from "./modules/hrManagementSystem/attendance/attendance.controller.js";
 import deductionRouter from "./modules/hrManagementSystem/deduction/deduction.controller.js";
 import salaryRouter from "./modules/hrManagementSystem/salary/salary.controller.js";
+import { handleStripeWebhook } from "./modules/order/order.service.js";
 
 export const bootstrap = () => {
   const app = express();
+  app.use(
+    "/api/v1/orders/webhook",
+    express.raw({ type: "application/json" }),
+    handleStripeWebhook,
+  );
   app.use(express.json());
   databaseConnection();
   const server = createServer(app);

@@ -36,6 +36,9 @@ let orderSchema = mongoose.Schema(
       enum: ["cod", "card"],
       required: true,
     },
+    stripeSessionId: {
+      type: String,
+    },
   },
   { timestamps: true },
 );
