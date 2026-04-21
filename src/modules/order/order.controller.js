@@ -5,6 +5,8 @@ import {
   viewOrderDetails,
   viewAllOrders,
   updateOrderStatus,
+  handlePaymentCancel,
+  handlePaymentSuccess,
 } from "./order.service.js";
 import { auth } from "../../middleware/auth.js";
 import { authorize } from "../../middleware/authorize.js";
@@ -13,6 +15,8 @@ import { checkoutSchema, updateOrderStatusSchema } from "./order.validation.js";
 
 let router = Router();
 router.post("/orders/checkout", auth, validation(checkoutSchema), checkoutCart);
+router.get("/orders/checkout/success", handlePaymentSuccess);
+router.get("/orders/checkout/cancel", handlePaymentCancel);
 router.get("/orders", auth, viewMyOrders);
 router.get("/orders/:id", auth, viewOrderDetails);
 router.get("/admin/orders", auth, authorize("admin"), viewAllOrders);

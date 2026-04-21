@@ -2,8 +2,10 @@ import jwt from "jsonwebtoken";
 import env from "../../config/env.service.js";
 export const auth = (req, res, next) => {
   let { authorization } = req.headers;
+  console.log(authorization, "hii");
+
   if (!authorization) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized from headers" });
   }
   try {
     let [bearer, token] = authorization.split(" ");
@@ -20,13 +22,13 @@ export const auth = (req, res, next) => {
         break;
 
       default:
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Unauthorized from default" });
     }
     let decoded = jwt.verify(token, signature);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized from error" });
   }
 };
 

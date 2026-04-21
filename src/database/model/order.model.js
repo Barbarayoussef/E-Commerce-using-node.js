@@ -31,6 +31,11 @@ let orderSchema = mongoose.Schema(
     ],
     totalOrderPrice: { type: Number, default: 0 },
     shippingAddress: { type: String, required: true },
+    paymentMethod: {
+      type: String,
+      enum: ["cod", "card"],
+      required: true,
+    },
   },
   { timestamps: true },
 );

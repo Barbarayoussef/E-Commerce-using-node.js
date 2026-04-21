@@ -1,7 +1,8 @@
 import joi from "joi";
 
 export const checkoutSchema = joi.object({
-  shippingAddress: joi.string().min(10).required(),
+  paymentMethod: joi.string().valid("card", "cod").required(),
+  shippingAddress: joi.string().min(10),
 });
 
 export const updateOrderStatusSchema = joi.object({
